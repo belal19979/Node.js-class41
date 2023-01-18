@@ -1,19 +1,25 @@
-import express from "express"
-const app = express()
+import express from 'express';
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('hello from backend to frontend')
-})
 
+  res.send('hello from backend to frontend');
+});
 
-app.post('/weather', (req, res) => {
-  const { cityName } = req.body
+app.post('/weather', async (req, res) => {
+  const { cityName } = req.body;
   if (!cityName) {
-    return res.status(400).json("City not existed!")
+    return res.status(400).json({ weatherText: 'City is not found!' });
   }
-  res.status(200).json(cityName)
 
-})
-app.listen(3000, () => { console.log('listening to port 3000') })
+  return res.status(200).json(cityName)
+
+});
+
+
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`server running on port ${PORT}`));
